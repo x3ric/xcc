@@ -1,0 +1,58 @@
+#!/usr/local/bin/xc -run -O1
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define ARRAY_SIZE 10000
+#define NUM_ITERATIONS 10000
+
+// Function to calculate the sum of an array
+int sum_array(int arr[], int size) {
+    int sum = 0;
+    for (int i = 0; i < size; i++) {
+        sum += arr[i];
+    }
+    return sum;
+}
+
+// Function to calculate the product of an array
+long long product_array(int arr[], int size) {
+    long long product = 1;
+    for (int i = 0; i < size; i++) {
+        product *= arr[i];
+    }
+    return product;
+}
+
+int main() {
+    int array[ARRAY_SIZE];
+    srand(time(NULL));
+
+    // Fill array with random numbers
+    for (int i = 0; i < ARRAY_SIZE; i++) {
+        array[i] = rand() % 100;
+    }
+
+    clock_t start_time, end_time;
+    double total_time;
+
+    // Benchmarking sum_array function
+    start_time = clock();
+    for (int i = 0; i < NUM_ITERATIONS; i++) {
+        int result = sum_array(array, ARRAY_SIZE);
+    }
+    end_time = clock();
+    total_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+    printf("Time taken for sum_array function: %.6f seconds\n", total_time);
+
+    // Benchmarking product_array function
+    start_time = clock();
+    for (int i = 0; i < NUM_ITERATIONS; i++) {
+        long long result = product_array(array, ARRAY_SIZE);
+    }
+    end_time = clock();
+    total_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+    printf("Time taken for product_array function: %.6f seconds\n", total_time);
+
+    return 0;
+}
